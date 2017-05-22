@@ -8,3 +8,12 @@ Music——音乐列表滑动控制底部控制器
   5.底部里面有SeekBar，包括当前播放时间和总时间，还有进度条
   6.列表上下滑动会让底部控制器的显示隐藏
 
+
+
+
+
+
+
+
+DownLoad apk：
+[下载链接](https://github.com/twohuoone/Music_Control/blob/master/app/Music_Control.apk) 
