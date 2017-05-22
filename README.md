@@ -16,8 +16,5 @@ gif动态图因为mac上虚拟机滑动的效果没有显示，需要的可以�
 
 
 
-
-
-
 DownLoad apk：
 [下载链接](https://github.com/twohuoone/Music_Control/blob/master/app/Music_Control.apk) 
