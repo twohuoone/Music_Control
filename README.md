@@ -9,7 +9,9 @@ Music——音乐列表滑动控制底部控制器
   6.列表上下滑动会让底部控制器的显示隐藏
   
   
-gif动态图因为mac上虚拟机滑动的效果没有显示，需要的可以下载apk，
+gif动态图因为mac上虚拟机滑动的效果没有显示，需要的可以下载apk：
+
+![](https://github.com/twohuoone/Music_Control/blob/master/app/2cbc5c8d-26b3-4552-9439-b79b04ffd2cc.png) 
 
 
 
