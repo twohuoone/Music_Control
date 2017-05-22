@@ -90,7 +90,6 @@
     </LinearLayout>
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/customer_Number"
         style="@style/FontTheme_BM"
         android:layout_width="match_parent"

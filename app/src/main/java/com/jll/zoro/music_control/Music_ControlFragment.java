@@ -4,9 +4,11 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,13 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,
+/**
+ * @Author : Zoro.
+ * @Date : 2017/4/6.
+ * @Describe :
+ */
+
+public class Music_ControlFragment extends Fragment implements View.OnClickListener,
         Music_ControlAdapter.showMusic_Control, Music_ControlAdapter.startMusic_Control,
         Music_ControlAdapter.pauseMusic_Control, Music_ControlAdapter.restartMusic_Control {
     private static int CURRENT_POSITION = 0;
@@ -34,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private float oldY = 0, newY = 0;
     private int lastVisibleItemPosition = -1;
+    private View view;
     private BaseListView listView;
     private TextView customer_Nnumber;
     private EditText find_name;
@@ -129,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         }
                     }else{
-                        //不处理
+                     //不处理
                     }
                     break;
             }
@@ -137,40 +146,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_music_control, null);
         initView();
         initData();
+        return view;
     }
 
     private void initData() {
         for (int i = 0; i < 30; i++) {
             list.add(false);
         }
-        adapter = new Music_ControlAdapter(MainActivity.this, list, this, this, this, this);
-        TextView textView = new TextView(MainActivity.this);
+        adapter = new Music_ControlAdapter(getActivity(), list, this, this, this, this);
+        TextView textView = new TextView(getActivity());
         textView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80));
         listView.addFooterView(textView);
         listView.setAdapter(adapter);
     }
 
     private void initView() {
-        dialog = new ProgressDialog(MainActivity.this);
-        listView = (BaseListView) findViewById(R.id.recording_listView);
-        customer_Nnumber = (TextView) findViewById(R.id.customer_Number);
-        find_name = (EditText) findViewById(R.id.find_name);
-        clear_find = (ImageView) findViewById(R.id.clear_find);
-        music_Control = (LinearLayout) findViewById(R.id.music_Control);
+        dialog = new ProgressDialog(getActivity());
+        listView = (BaseListView) view.findViewById(R.id.recording_listView);
+        customer_Nnumber = (TextView) view.findViewById(R.id.customer_Number);
+        find_name = (EditText) view.findViewById(R.id.find_name);
+        clear_find = (ImageView) view.findViewById(R.id.clear_find);
+        music_Control = (LinearLayout) view.findViewById(R.id.music_Control);
         music_Control.getBackground().setAlpha(230);
-        last_Music = (ImageView) findViewById(R.id.last_Music);
-        next_Music = (ImageView) findViewById(R.id.next_Music);
-        start_Music = (ImageView) findViewById(R.id.start_Music);
-        refresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
-        current_Timer = (TextView) findViewById(R.id.current_Time);
-        total_Timer = (TextView) findViewById(R.id.total_Time);
-        seekBar = (SeekBar) findViewById(R.id.seekbar);
+        last_Music = (ImageView) view.findViewById(R.id.last_Music);
+        next_Music = (ImageView) view.findViewById(R.id.next_Music);
+        start_Music = (ImageView) view.findViewById(R.id.start_Music);
+        refresh = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        current_Timer = (TextView) view.findViewById(R.id.current_Time);
+        total_Timer = (TextView) view.findViewById(R.id.total_Time);
+        seekBar = (SeekBar) view.findViewById(R.id.seekbar);
         mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
                 1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
@@ -356,14 +366,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 adapter.notify(CURRENT_POSITION, true);
                 break;
             case R.id.start_Music:
-                if (start_Music.getDrawable().getCurrent().getConstantState().equals(ContextCompat.getDrawable(MainActivity.this, R.drawable.control_start).getConstantState())) {
-                    start_Music.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.control_stop));
+                if (start_Music.getDrawable().getCurrent().getConstantState().equals(ContextCompat.getDrawable(getActivity(), R.drawable.control_start).getConstantState())) {
+                    start_Music.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.control_stop));
                     pauseMediaplayer(1);
                     //点击底部控制器更改item的状态
                     list.set(CURRENT_POSITION, false);
                     adapter.notify(CURRENT_POSITION, false);
                 } else {
-                    start_Music.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, R.drawable.control_start));
+                    start_Music.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.control_start));
                     restartMediaplayer(1);
                     list.set(CURRENT_POSITION, true);
                     adapter.notify(CURRENT_POSITION, false);
@@ -408,7 +418,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //点击了item以后顺便更改底部控制器的状态
     private void change_MusicState(int state) {
-        start_Music.setImageDrawable(ContextCompat.getDrawable(MainActivity.this, state));
+        start_Music.setImageDrawable(ContextCompat.getDrawable(getActivity(), state));
     }
 
     @Override
